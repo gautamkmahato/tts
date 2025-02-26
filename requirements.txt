@@ -3,4 +3,6 @@ gevent
 python-dotenv
 edge-tts
 art
-
+supabase
+python-multipart
+gunicorn
