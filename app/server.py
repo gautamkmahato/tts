@@ -7,8 +7,10 @@ import os
 from supabase import create_client
 import uuid
 
-from tts_handler import generate_speech, get_models, get_voices
-from utils import require_api_key, AUDIO_FORMAT_MIME_TYPES
+
+from app.tts_handler import generate_speech, get_models, get_voices
+from app.utils import require_api_key, AUDIO_FORMAT_MIME_TYPES
+
 
 app = Flask(__name__)
 load_dotenv()
