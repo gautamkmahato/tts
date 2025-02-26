@@ -39,6 +39,7 @@ def hello_world():
 @require_api_key
 def text_to_speech():
     data = request.json
+    print("text_to_speech")
     if not data or 'input' not in data:
         return jsonify({"error": "Missing 'input' in request body"}), 400
 
