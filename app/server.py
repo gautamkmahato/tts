@@ -21,7 +21,7 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 API_KEY = os.getenv('API_KEY', 'your_api_key_here')
-PORT = int(os.getenv('PORT', 5050))
+PORT = int(os.getenv('PORT', 8050))
 
 DEFAULT_VOICE = os.getenv('DEFAULT_VOICE', 'en-US-AndrewNeural')
 DEFAULT_RESPONSE_FORMAT = os.getenv('DEFAULT_RESPONSE_FORMAT', 'mp3')
