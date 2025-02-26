@@ -1,0 +1,51 @@
+
+curl -X GET http://localhost:5050/v1/voices/all \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your_api_key_here" \
+
+
+curl -X POST http://localhost:5050/v1/audio/speech \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your_api_key_here" \
+  -d '{
+    "model": "tts-1",
+    "input": "Generate the audio file in the specified format with speed adjustment",
+    "voice": "hi-IN-MadhurNeural",
+    "speed": 1 
+  }' \
+  --output speech-en-au.mp3 
+
+
+@app.route("/text-to-speech", methods=["POST"])
+def text_to_speech():
+    data = request.json
+    if not data or 'input' not in data:
+        return jsonify({"error": "Missing 'input' in request body"}), 400
+
+    text = data.get('input')
+    voice = data.get('voice', DEFAULT_VOICE)
+    response_format = data.get('response_format', DEFAULT_RESPONSE_FORMAT)
+    speed = float(data.get('speed', DEFAULT_SPEED))
+    mime_type = AUDIO_FORMAT_MIME_TYPES.get(response_format, "audio/mpeg")
+
+    # Generate the audio file
+    output_file_path = generate_speech(text, voice, response_format, speed)
+    file_name = f"speech.{response_format}"
+
+    # Upload the file to Supabase Storage
+    with open(output_file_path, "rb") as audio_file:
+        res = supabase.storage.from_("tts-outputs").upload(file_name, audio_file.read(), file_options={"content-type": mime_type})
+    
+    if res.get("error"):
+        return jsonify({"error": "Failed to upload file to Supabase"}), 500
+
+    # Get the public URL of the uploaded file
+    public_url = supabase.storage.from_("tts-outputs").get_public_url(file_name)
+
+    return jsonify({"success": True, "file_url": public_url})
+
+
+
+
+
+
