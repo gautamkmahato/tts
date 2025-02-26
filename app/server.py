@@ -103,13 +103,6 @@ print(f" * Server running on http://localhost:{PORT}")
 print(f" * TTS Endpoint: http://localhost:{PORT}/v1/audio/speech")
 print(f" ")
 
-# if __name__ == '__main__':
-#     http_server = WSGIServer(('0.0.0.0', PORT), app)
-#     http_server.serve_forever()
-
-# if __name__ == '__main__':
-#     from gunicorn.app.wsgiapp import run
-#     run()
-
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    http_server = WSGIServer(('0.0.0.0', PORT), app)
+    http_server.serve_forever()
