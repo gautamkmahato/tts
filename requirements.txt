@@ -1,6 +1,6 @@
 flask
-gunicorn
+gevent
 python-dotenv
 edge-tts
 art
-supabase
+
