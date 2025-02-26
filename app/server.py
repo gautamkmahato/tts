@@ -107,6 +107,9 @@ print(f" ")
 #     http_server = WSGIServer(('0.0.0.0', PORT), app)
 #     http_server.serve_forever()
 
+# if __name__ == '__main__':
+#     from gunicorn.app.wsgiapp import run
+#     run()
+
 if __name__ == '__main__':
-    from gunicorn.app.wsgiapp import run
-    run()
+    app.run(debug=True,host='0.0.0.0')
